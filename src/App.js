@@ -1,7 +1,9 @@
+import React from "react";
 import Header from "./Header";
+import axios from "axios";
 
 function App() {
-  const items = [
+  const itemss = [
     {
       id: "1",
       title: "Кроссовки Puma X Aka Boku Future Rider",
@@ -22,6 +24,19 @@ function App() {
     },
   ];
 
+  const [items, setItems] = React.useState([])
+
+  React.useEffect(() => {
+    async function fetchData() {
+      const itemsResponse = await axios.get(
+        "https://684034985b39a8039a57355c.mockapi.io/items"
+      );
+      setItems(itemsResponse.data)
+    }
+    fetchData();
+  }, [])
+
+
   const itemsRender = () => {
     return items.map((item) => (
       <>
@@ -29,7 +44,7 @@ function App() {
           <img src="img/heart-unliked.svg" alt="like" />
         </div>
         <div>
-          <img src="" alt="item" />
+          <img height={133} width={133} src={item.imageUrl} alt="item" />
           <h5>{item.title}</h5>
         </div>
         <div className="d-flex justify-between align-center">
@@ -37,7 +52,7 @@ function App() {
             <p>ЦЕНА:</p>
             <span>{item.price} руб.</span>
           </div>
-          <img src="img/btn-plus" alt="plus" />
+          <img src="img/btn-plus.svg" alt="plus" />
         </div>
       </>
     ));
