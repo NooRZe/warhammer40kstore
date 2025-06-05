@@ -18,7 +18,8 @@ function App() {
   }, []);
 
   const itemsRender = () => {
-    return items.map((item) => (
+    const filteredItems = items.filter(item => item.title.toLowerCase().includes(searchValue.toLocaleLowerCase()));
+    return filteredItems.map((item) => (
       <Card
         id={item.id}
         imageUrl={item.imageUrl}
