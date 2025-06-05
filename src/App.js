@@ -5,6 +5,7 @@ import Card from "./components";
 
 function App() {
   const [items, setItems] = React.useState([]);
+  const [searchValue, setSearchValue] = React.useState("");
 
   React.useEffect(() => {
     async function fetchData() {
@@ -27,16 +28,34 @@ function App() {
     ));
   };
 
+  const onSearchInputChange = (event) => {
+    setSearchValue(event.target.value);
+  };
+
   return (
     <div className="wrapper clear">
       <Header />
 
       <div className="main-content p-40">
         <div className="d-flex align-center justify-between mb-40">
-          <h1>Все товары</h1>
-          <div>
+          <h1>
+            {searchValue ? `Поиск по запросу: "${searchValue}"` : "Все товары"}
+          </h1>
+          <div className="searchBlock d-flex">
             <img src="img/search.svg" alt="search" />
-            <input placeholder="Поиск..."></input>
+            {searchValue && (
+              <img
+                onClick={() => setSearchValue("")}
+                src="/img/btn-remove.svg"
+                className="clear cu-p"
+                alt="clear"
+              />
+            )}
+            <input
+              onChange={onSearchInputChange}
+              value={searchValue}
+              placeholder="Поиск..."
+            />
           </div>
         </div>
         <div className="d-flex flex-wrap">{itemsRender()}</div>
