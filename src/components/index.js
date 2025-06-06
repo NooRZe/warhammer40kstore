@@ -14,7 +14,7 @@ function Card({ title, price, imageUrl }) {
           <b>{price} руб.</b>
         </div>
         <div className="d-flex justify-between align-center">
-          <img src="img/heart-unliked.svg" alt="like" />
+          <img className={styles.plus} src="img/heart-unliked.svg" alt="like" />
           <img className={styles.plus} src="img/btn-plus.svg" alt="plus" />
         </div>
       </div>
