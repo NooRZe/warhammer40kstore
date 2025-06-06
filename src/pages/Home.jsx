@@ -1,6 +1,12 @@
 import Card from "../components";
 
-function Home({ searchValue, setSearchValue, onSearchInputChange, items }) {
+function Home({
+  searchValue,
+  setSearchValue,
+  onSearchInputChange,
+  items,
+  onAddToCart,
+}) {
   const itemsRender = () => {
     const filteredItems = items.filter((item) =>
       item.title.toLowerCase().includes(searchValue.toLocaleLowerCase())
@@ -8,9 +14,11 @@ function Home({ searchValue, setSearchValue, onSearchInputChange, items }) {
     return filteredItems.map((item) => (
       <Card
         id={item.id}
+        itemId={item.itemId}
         imageUrl={item.imageUrl}
         price={item.price}
         title={item.title}
+        onAddToCart={onAddToCart}
       />
     ));
   };

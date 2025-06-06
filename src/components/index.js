@@ -1,7 +1,13 @@
 import React from "react";
 import styles from "./Card.module.scss";
 
-function Card({ title, price, imageUrl }) {
+function Card({itemId, id, title, price, imageUrl, onAddToCart, }) {
+  const [isInCart, setIsInCart] = React.useState(false)
+  const onPlus = () => {
+    onAddToCart({itemId, id, imageUrl, price, title})
+  }
+
+
   return (
     <div className={styles.card}>
       <div>
@@ -15,7 +21,7 @@ function Card({ title, price, imageUrl }) {
         </div>
         <div className="d-flex justify-between align-center">
           <img className={styles.plus} src="img/heart-unliked.svg" alt="like" />
-          <img className={styles.plus} src="img/btn-plus.svg" alt="plus" />
+          <img onClick={onPlus} className={styles.plus} src="img/btn-plus.svg" alt="plus" />
         </div>
       </div>
     </div>
