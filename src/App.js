@@ -1,13 +1,14 @@
 import React from "react";
 import Header from "./Header";
 import axios from "axios";
-
+import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 
 function App() {
   const [items, setItems] = React.useState([]);
   const [searchValue, setSearchValue] = React.useState("");
   const [cartItems, setCartItems] = React.useState([]);
+  const [cartOpened, setCartOpened] = React.useState(false);
 
   React.useEffect(() => {
     async function fetchData() {
@@ -29,7 +30,6 @@ function App() {
   };
 
   const onAddToCart = (obj) => {
-    console.log(obj.itemId);
     if (
       cartItems.find((cartObj) => Number(cartObj.itemId) === Number(obj.itemId))
     ) {
@@ -49,18 +49,21 @@ function App() {
 
   const onCartRemoval = (obj) => {
     console.log(obj);
-    axios
-      .delete(
-        `https://684034985b39a8039a57355c.mockapi.io/cart/${obj.itemId}`,
-        obj
-      )
-      .then((res) => setCartItems((prev) => [...prev, res.data]));
-    console.log(cartItems);
+    axios.delete(`https://684034985b39a8039a57355c.mockapi.io/cart/${obj.itemId}`);
+    setCartItems((prev) => prev.filter((item) => Number(item.itemId) !== Number(obj.itemId)))
   };
 
   return (
     <div className="wrapper clear">
-      <Header />
+      {cartOpened && (
+        <Cart
+          items={cartItems}
+          onRemoval={onCartRemoval}
+          onClose={() => setCartOpened(false)}
+        />
+      )}
+
+      <Header onCartClick={() => setCartOpened(true)} />
       <Home
         items={items}
         searchValue={searchValue}
