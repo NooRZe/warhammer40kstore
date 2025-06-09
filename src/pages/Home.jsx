@@ -6,6 +6,7 @@ function Home({
   onSearchInputChange,
   items,
   onAddToCart,
+  itemSelection
 }) {
   const itemsRender = () => {
     const filteredItems = items.filter((item) =>
@@ -19,6 +20,7 @@ function Home({
         price={item.price}
         title={item.title}
         onAddToCart={onAddToCart}
+        itemSelection={itemSelection}
       />
     ));
   };

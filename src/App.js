@@ -11,6 +11,13 @@ function App() {
   const [searchValue, setSearchValue] = React.useState("");
   const [cartItems, setCartItems] = React.useState([]);
   const [cartOpened, setCartOpened] = React.useState(false);
+  const [selectedItem, setSelectedItem] = React.useState([{
+    "id": "1",
+    "itemId": "1",
+    "title": "Horus Rising",
+    "imageUrl": "img/covers/1.jpg",
+    "price": 8999
+  }]);
 
   React.useEffect(() => {
     async function fetchData() {
@@ -29,6 +36,13 @@ function App() {
 
   const onSearchInputChange = (event) => {
     setSearchValue(event.target.value);
+  };
+
+  const itemSelection = (obj) => {
+    setSelectedItem((prev) => {
+      return [...prev, obj];
+    });
+    console.log(selectedItem);
   };
 
   const onAddToCart = (obj) => {
@@ -73,7 +87,7 @@ function App() {
 
       <Routes>
         <Route
-          path=""
+          path="/"
           element={
             <Home
               items={items}
@@ -82,6 +96,7 @@ function App() {
               setSearchValue={setSearchValue}
               onAddToCart={onAddToCart}
               onCartRemoval={onCartRemoval}
+              itemSelection={itemSelection}
             />
           }
           exact
@@ -89,15 +104,10 @@ function App() {
       </Routes>
       <Routes>
         <Route
-        path="/item"
-        element={
-          <ItemPage>
-
-          </ItemPage>
-        }
-        >
-
-        </Route>
+          path="/item"
+          element={<ItemPage selectedItem={selectedItem}></ItemPage>}
+          exact
+        ></Route>
       </Routes>
     </div>
   );

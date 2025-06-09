@@ -1,11 +1,14 @@
-
 import Item from "../components/Item";
 
-function ItemPage() {
-  return(
-    <Item>
-
-    </Item>
+function ItemPage({ selectedItem }) {
+  return (
+    <Item
+      id={selectedItem.id}
+      itemId={selectedItem.itemId}
+      imageUrl={selectedItem.imageUrl}
+      price={selectedItem.price}
+      title={selectedItem.title}
+    ></Item>
   );
 }
 
