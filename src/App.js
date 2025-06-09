@@ -3,6 +3,8 @@ import Header from "./Header";
 import axios from "axios";
 import Cart from "./pages/Cart";
 import Home from "./pages/Home";
+import ItemPage from "./pages/ItemPage";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   const [items, setItems] = React.useState([]);
@@ -49,8 +51,12 @@ function App() {
 
   const onCartRemoval = (obj) => {
     console.log(obj);
-    axios.delete(`https://684034985b39a8039a57355c.mockapi.io/cart/${obj.itemId}`);
-    setCartItems((prev) => prev.filter((item) => Number(item.itemId) !== Number(obj.itemId)))
+    axios.delete(
+      `https://684034985b39a8039a57355c.mockapi.io/cart/${obj.itemId}`
+    );
+    setCartItems((prev) =>
+      prev.filter((item) => Number(item.itemId) !== Number(obj.itemId))
+    );
   };
 
   return (
@@ -64,14 +70,35 @@ function App() {
       )}
 
       <Header onCartClick={() => setCartOpened(true)} />
-      <Home
-        items={items}
-        searchValue={searchValue}
-        onSearchInputChange={onSearchInputChange}
-        setSearchValue={setSearchValue}
-        onAddToCart={onAddToCart}
-        onCartRemoval={onCartRemoval}
-      />
+
+      <Routes>
+        <Route
+          path=""
+          element={
+            <Home
+              items={items}
+              searchValue={searchValue}
+              onSearchInputChange={onSearchInputChange}
+              setSearchValue={setSearchValue}
+              onAddToCart={onAddToCart}
+              onCartRemoval={onCartRemoval}
+            />
+          }
+          exact
+        ></Route>
+      </Routes>
+      <Routes>
+        <Route
+        path="/item"
+        element={
+          <ItemPage>
+
+          </ItemPage>
+        }
+        >
+
+        </Route>
+      </Routes>
     </div>
   );
 }
